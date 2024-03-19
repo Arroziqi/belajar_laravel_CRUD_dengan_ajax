@@ -9,3 +9,4 @@ Route::get('/', function () {
 
 Route::resource('kepala-keluarga', KepalaKeluargaController::class);
 
+Route::get('/tai/json', [KepalaKeluargaController::class, 'index'])->name('tai');

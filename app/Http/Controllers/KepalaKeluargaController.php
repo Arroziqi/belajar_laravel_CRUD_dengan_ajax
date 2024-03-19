@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KepalaKeluarga;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class KepalaKeluargaController extends Controller
 {
@@ -12,8 +13,8 @@ class KepalaKeluargaController extends Controller
      */
     public function index()
     {
-        $items = KepalaKeluarga::all();
-        return view('index', compact('items'));
+        $data = KepalaKeluarga::all();
+        return DataTables::collection($data)->toJson();
     }
 
     /**
@@ -36,7 +37,11 @@ class KepalaKeluargaController extends Controller
         ]);
 
         KepalaKeluarga::create($validated);
-        return redirect()->back()->with('success', 'Data berhasil ditambahkan');
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil ditambahkan',
+            'data' => $validated,
+        ]);
     }
 
     /**
